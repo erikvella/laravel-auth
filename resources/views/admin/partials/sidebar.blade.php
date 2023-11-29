@@ -1,11 +1,11 @@
-<aside>
-    <nav class="bg-dark">
+<aside class="bg-dark">
+    <nav>
         <ul>
             <li>
-                <a href="#">Dashboard</a>
+                <a href="{{ route('admin.home') }}">Dashboard</a>
             </li>
             <li>
-                <a href="#">Lista progetti</a>
+                <a href="{{ route('admin.projects.index') }}">Lista progetti</a>
             </li>
         </ul>
     </nav>
