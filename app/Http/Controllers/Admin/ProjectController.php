@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Project;
+use App\Http\Requests\ProjectRequest;
+use App\Functions\Helper;
 
 class ProjectController extends Controller
 {
@@ -26,7 +28,12 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        $title = 'Crea un nuovo progetto';
+        $method = 'POST';
+        $route = route('admin.projects.store');
+        $project = null;
+        return view('admin.projects.create-edit' , compact('title' , 'method' , 'route' , 'project'));
+
     }
 
     /**
@@ -35,9 +42,15 @@ class ProjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProjectRequest $request)
     {
-        //
+        $form_data = $request->all();
+        $form_data['slug'] = Helper::generateSlug($form_data['title'] , Project::class);
+        $form_data['date'] = date('Y/m/d');
+        $new_project = Project::create($form_data);
+
+        return redirect()->route('admin.projects.show' , $new_project);
+
     }
 
     /**
@@ -57,9 +70,14 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Project $project)
     {
-        //
+        $title = 'Modifica il progetto';
+        $method = 'PUT';
+        $route = route('admin.projects.update' , $project);
+
+        return view('admin.projects.create-edit' , compact('title' , 'method' , 'route' , 'project'));
+
     }
 
     /**
@@ -69,9 +87,18 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProjectRequest $request, Project $project)
     {
-        //
+        $form_data = $request->all();
+        if($form_data['title'] !== $project->title){
+            $form_data['slug'] = Helper::generateSlug($form_data['title'] , Project::class);
+        }else{
+            $form_data['slug'] = $project->slug;
+        }
+
+        $form_data['date'] = date('Y/m/d');
+        $project->update($form_data);
+        return redirect()->route('admin.projects.show' , $project);
     }
 
     /**

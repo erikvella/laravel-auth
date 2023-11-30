@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
 use App\Models\Project;
 use Illuminate\Support\Str;
+use App\Functions\Helper;
 
 class ProjectTableSeeder extends Seeder
 {
@@ -20,7 +21,7 @@ class ProjectTableSeeder extends Seeder
         for($i = 0 ; $i < 50 ; $i++){
             $new_project = new Project();
             $new_project->title = $faker->sentence();
-            $new_project->slug = Project::generateSlug($new_project->title);
+            $new_project->slug = Helper::generateSlug($new_project->title , Project::class);
             $new_project->text = $faker->paragraph();
             $new_project->date = $faker->date();
 

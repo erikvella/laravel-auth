@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container d-flex flex-column">
-        <h1>elenco categorie</h1>
+        <h1>Elenco tecnologie</h1>
 
         <form action="{{ route('admin.tecnologies.store') }}" method="POST">
             @csrf
@@ -23,6 +23,19 @@
                 {{ session('success') }}
             </div>
         @endif
+
+        {{-- messaggio di errore dato dalla validazione dei dati (validazione nell'update di tecnologies) --}}
+        @if ($errors->any())
+            <div class="alert alert-danger" role="alert">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+
 
         <table class="table">
             <thead>

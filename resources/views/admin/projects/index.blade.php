@@ -22,7 +22,12 @@
                         <td>{{ $project->title }}</td>
                         <td>{{ $project->text }}</td>
                         <td>{{ $project->date }}</td>
-                        <td><a class="btn btn-warning" href="{{ route('admin.projects.show', $project) }}">Dettagli
+                        <td class="d-flex">
+                            <a class="btn btn-success mx-3" href="{{ route('admin.projects.show', $project) }}">Dettagli
+                                progetto</a>
+                            <a class="btn btn-warning mx-3 " href="{{ route('admin.projects.edit', $project) }}">Modifica
+                                progetto</a>
+                            <a class="btn btn-danger mx-3" href="{{ route('admin.projects.edit', $project) }}">Elimina
                                 progetto</a>
                         </td>
 
