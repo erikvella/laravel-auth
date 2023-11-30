@@ -18,7 +18,7 @@
         <div class="container my-5">
 
 
-            <form action="{{ $route }}" method="POST">
+            <form action="{{ $route }}" method="POST" enctype="multipart/form-data">
                 {{-- @csrf : elemento da inserire in tutti i form in laravel per controllo di sicurezza --}}
                 @csrf
                 @method($method)
@@ -33,6 +33,15 @@
                     <p class="text-danger">{{ $message }}</p>
                 @enderror
 
+                <div class="mb-3">
+                    <label for="image" class="form-label">Immagine</label>
+                    <input type="file" class="form-control" id="image" name="image"
+                        value="{{ old('image', $project?->image) }}">
+
+                </div>
+                {{-- @error('image')
+                    <p class="text-danger">{{ $message }}</p>
+                @enderror --}}
                 <div class="form-floating my-5">
                     <textarea for="text" class="form-control" placeholder="Scrivi la descrizione" id="text" name="text"
                         style="height: 100px"> {{ old('text', $project?->text) }}</textarea>

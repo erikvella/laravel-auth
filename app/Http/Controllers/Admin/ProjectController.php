@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Http\Requests\ProjectRequest;
 use App\Functions\Helper;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -47,6 +48,18 @@ class ProjectController extends Controller
         $form_data = $request->all();
         $form_data['slug'] = Helper::generateSlug($form_data['title'] , Project::class);
         $form_data['date'] = date('Y/m/d');
+
+//  se esiste la chiave image salvo l'immagine nel filesystem e nel database
+if(array_key_exists('image' , $form_data)){
+
+// prima di salvare il file prendo il nome del file per salvarlo nel mio DB
+    $form_data['image_original_name'] = $request->file('image')->getClientOriginalName();
+
+// salvo l'immagine nel database rinominandolo secondo l'algoritmo di laravel
+    $form_data['image'] = Storage::put('uploads', $form_data['image']);
+
+}
+
         $new_project = Project::create($form_data);
 
         return redirect()->route('admin.projects.show' , $new_project);
