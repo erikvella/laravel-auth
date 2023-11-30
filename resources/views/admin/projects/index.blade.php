@@ -31,7 +31,7 @@
                             <a class="btn btn-warning mx-3 " href="{{ route('admin.projects.edit', $project) }}">Modifica
                                 progetto</a>
                             @include('admin.partials.form-delete', [
-                                'route' => route('admin.projects.destroy', $projects),
+                                'route' => route('admin.projects.destroy', $project),
                                 'message' => 'Sei sicuro di voler eliminare questo progetto?',
                             ])
                         </td>
