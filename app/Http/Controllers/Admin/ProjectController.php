@@ -109,6 +109,21 @@ if(array_key_exists('image' , $form_data)){
             $form_data['slug'] = $project->slug;
         }
 
+        if(array_key_exists('image' , $form_data)){
+            // se esiste la chiave image vuol dire che devo sostituire l'immagine presente (se c'è) eliminando quella vecchia
+            if($project->image){
+            // se era presente la elimino nella storage
+               Storage::disk('public')->delete($project->image);
+            }
+
+            // prima di salvare il file prendo il nome del file per salvarlo nel mio DB
+            $form_data['image_original_name'] = $request->file('image')->getClientOriginalName();
+
+            // salvo l'immagine nel database rinominandolo secondo l'algoritmo di laravel
+            $form_data['image'] = Storage::put('uploads', $form_data['image']);
+
+        }
+
         $form_data['date'] = date('Y/m/d');
         $project->update($form_data);
         return redirect()->route('admin.projects.show' , $project);
@@ -120,8 +135,13 @@ if(array_key_exists('image' , $form_data)){
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Project $project)
     {
-        //
+        // se il progetto contiene un'immagine , la devo eliminare
+        if($project->image){
+            Storage::disk('public')->delete($project->image);
+        }
+        $project->delete();
+        return redirect()->route('admin.projects.index')->with('success' , 'Il progetto è stato eliminato correttamente');
     }
 }

@@ -42,6 +42,9 @@
                 {{-- @error('image')
                     <p class="text-danger">{{ $message }}</p>
                 @enderror --}}
+                @if ($project)
+                    <img width="120" src="{{ asset('storage/' . $project->image) }}">
+                @endif
                 <div class="form-floating my-5">
                     <textarea for="text" class="form-control" placeholder="Scrivi la descrizione" id="text" name="text"
                         style="height: 100px"> {{ old('text', $project?->text) }}</textarea>

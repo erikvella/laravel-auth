@@ -4,6 +4,9 @@
     <div class="container d-flex flex-column">
         <h1>elenco progetti</h1>
 
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
         <table class="table">
             <thead>
                 <tr>
@@ -27,8 +30,10 @@
                                 progetto</a>
                             <a class="btn btn-warning mx-3 " href="{{ route('admin.projects.edit', $project) }}">Modifica
                                 progetto</a>
-                            <a class="btn btn-danger mx-3" href="{{ route('admin.projects.edit', $project) }}">Elimina
-                                progetto</a>
+                            @include('admin.partials.form-delete', [
+                                'route' => route('admin.projects.destroy', $projects),
+                                'message' => 'Sei sicuro di voler eliminare questo progetto?',
+                            ])
                         </td>
 
 
