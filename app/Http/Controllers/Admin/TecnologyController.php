@@ -82,9 +82,13 @@ class TecnologyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Tecnology $tecnology)
     {
-        //
+    //  1 validare il dato
+    // 2 generare lo slug
+    // 3 effettuare l'update
+    // 4 reindirizzare all'index
+    dd($request->all());
     }
 
     /**

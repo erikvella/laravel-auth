@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Type;
+use Illuminate\Support\Str;
 
 class TypeController extends Controller
 {
@@ -14,7 +16,8 @@ class TypeController extends Controller
      */
     public function index()
     {
-        //
+        $types = Type::all();
+        return view('admin.types.index' , compact('types'));
     }
 
     /**
@@ -35,7 +38,16 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $exist = Type::where('name' , $request->name)->first();
+        if($exist){
+            return redirect()->route('admin.types.index')->with('error' , 'Questa tipologia esiste già!');
+        }else{
+            $new_type = new Type();
+            $new_type->name = $request->name;
+            $new_type->slug = Str::slug($request->name , '-');
+            $new_type->save();
+            return redirect()->route('admin.types.index')->with('success' , 'Nuova tecnologia inserita correttamente');
+        }
     }
 
     /**
@@ -78,8 +90,9 @@ class TypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Type $type)
     {
-        //
+        $type->delete();
+         return redirect()->route('admin.types.index')->with('success' , 'Tipologia eliminata correttamente');
     }
 }

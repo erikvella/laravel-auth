@@ -5,6 +5,14 @@ header{
 }
 .main-wrapper{
     height: calc(100vh - 60px);
+    .form-hidden{
+        width: 100%;
+        border: none;
+        &:focus{
+            outline: none;
+            border: none;
+        }
+    }
 }
 
 aside{
