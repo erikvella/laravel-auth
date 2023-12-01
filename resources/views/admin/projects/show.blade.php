@@ -4,7 +4,7 @@
     <div class="container d-flex flex-column">
         <h1>Titolo del progetto: {{ $project->title }}</h1>
         <div>
-            <img src="{{ asset('storage/' . $project->image) }}" alt="{{ $project->title }}">
+            <img class="show-img" src="{{ asset('storage/' . $project->image) }}" alt="{{ $project->title }}">
             <p> {{ $project->image_original_name }}</p>
         </div>
         {{-- rigiro la data nel formato italiano (giorno/mese/anno) --}}
