@@ -52,7 +52,7 @@
                         <td>{{ $tecnology->id }}</td>
                         <td>
                             <form action="{{ route('admin.tecnologies.update', $tecnology) }}" method="POST"
-                                id="form-edit">
+                                id="form-edit-{{ $tecnology->id }}">
                                 @csrf
                                 @method('PUT')
                                 <input type="text" class="form-hidden" name="name" value="{{ $tecnology->name }}">
@@ -64,7 +64,7 @@
                                 'message' => 'Sei sicuro di voler eliminare questa tecnologia?',
                             ])
 
-                            <button onclick="submitForm()" class="btn btn-warning">Modifica</button>
+                            <button onclick="submitForm({{ $tecnology->id }})" class="btn btn-warning">Modifica</button>
 
                         </td>
 
@@ -80,8 +80,8 @@
     </div>
 
     <script>
-        function submitForm() {
-            const form = document.getElementById('form-edit');
+        function submitForm(id) {
+            const form = document.getElementById('form-edit-' + id);
             form.submit();
         }
     </script>
